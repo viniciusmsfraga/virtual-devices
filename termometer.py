@@ -4,32 +4,24 @@ import paho.mqtt.client as mqtt
 import argparse
 
 
-def smart_lamp(device_id):
-	light = 0
-	objective = 0
+def termometer(device_id):
+	temperature = 26.2
 
 	def on_connect(client, userdata, flags, rc):
 		print("Connected with result code "+str(rc))
-		client.subscribe("devices/smart_lamp")
-
-	def on_message(client, userdata, msg):
-		nonlocal objective
-		objective = int(msg.payload.decode())
+		client.subscribe("devices/termometer")
 
 
 	client = mqtt.Client()
 	client.on_connect = on_connect
-	client.on_message = on_message
 
 	client.connect("localhost", 1883, 60)
 
 	client.loop_start()
 
 	while True:
-		sleep(2)
-		if light > objective:
-			light = objective
-		client.publish("drivers/smart_lamp", device_id+"="+str(light)+"=")
+		sleep(1)
+		client.publish("drivers/termometer", device_id+">"+str(temperature))
 
 	client.loop_stop()
 
@@ -41,4 +33,4 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	for device_id in range(args.size):
-		Process(target=smart_lamp, args=(str(device_id),)).start()
+		Process(target=termometer, args=(str(device_id),)).start()

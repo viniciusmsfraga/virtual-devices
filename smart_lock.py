@@ -8,9 +8,11 @@ def smart_lock(device_id):
     door_opened = 0
     objective = 0
 
+
     def on_connect(client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
         client.subscribe("commands/smart_lock")
+
 
     def on_message(client, userdata, msg):
         nonlocal objective
