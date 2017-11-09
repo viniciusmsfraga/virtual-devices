@@ -11,7 +11,7 @@ def smart_lock(device_id):
 
     def on_connect(client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
-        client.subscribe("commands/smart_lock")
+        client.subscribe("commands/smart_lock/" + device_id)
 
 
     def on_message(client, userdata, msg):
@@ -31,8 +31,6 @@ def smart_lock(device_id):
         if door_opened != objective:
             door_opened = objective
         client.publish("drivers/smart_lock", device_id+";"+str(door_opened)+";")
-
-    client.loop_stop()
 
 
 if __name__ == "__main__":

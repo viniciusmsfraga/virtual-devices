@@ -10,7 +10,7 @@ def smart_lamp(device_id):
 
 	def on_connect(client, userdata, flags, rc):
 		print("Connected with result code "+str(rc))
-		client.subscribe("devices/smart_lamp")
+		client.subscribe("devices/smart_lamp/" + device_id)
 
 	def on_message(client, userdata, msg):
 		nonlocal objective
@@ -30,8 +30,6 @@ def smart_lamp(device_id):
 		if light > objective:
 			light = objective
 		client.publish("drivers/smart_lamp", device_id+"="+str(light)+"=")
-
-	client.loop_stop()
 
 
 if __name__ == "__main__":

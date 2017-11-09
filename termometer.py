@@ -9,7 +9,7 @@ def termometer(device_id):
 
 	def on_connect(client, userdata, flags, rc):
 		print("Connected with result code "+str(rc))
-		client.subscribe("devices/termometer")
+		client.subscribe("devices/termometer/" + device_id)
 
 
 	client = mqtt.Client()
@@ -23,7 +23,6 @@ def termometer(device_id):
 		sleep(1)
 		client.publish("drivers/termometer", device_id+">"+str(temperature))
 
-	client.loop_stop()
 
 
 if __name__ == "__main__":

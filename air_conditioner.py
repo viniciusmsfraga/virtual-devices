@@ -11,7 +11,7 @@ def air_conditioner(device_id):
 
     def on_connect(client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
-        client.subscribe("commands/air_conditioner")
+        client.subscribe("commands/air_conditioner/" + device_id)
 
 
     def on_message(client, userdata, msg):
@@ -33,8 +33,6 @@ def air_conditioner(device_id):
         elif temperature < objective:
             temperature += 1
         client.publish("drivers/virtual_air", device_id+"::"+str(temperature))
-
-    client.loop_stop()
 
 
 if __name__ == "__main__":
