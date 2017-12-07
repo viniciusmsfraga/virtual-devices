@@ -18,10 +18,14 @@ def air_conditioner(device_id):
         nonlocal objective
         objective = int(msg.payload.decode())
 
+    def on_disconnect(client, userdata, rc):
+        print("disconnected")
+
 
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
+    client.on_disconnect = on_disconnect
 
     client.connect("localhost", 1883, 60)
     client.loop_start()

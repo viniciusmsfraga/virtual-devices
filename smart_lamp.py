@@ -27,7 +27,7 @@ def smart_lamp(device_id):
 
 	while True:
 		sleep(2)
-		if light > objective:
+		if light != objective:
 			light = objective
 		client.publish("drivers/smart_lamp", device_id+"="+str(light)+"=")
 
